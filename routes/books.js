@@ -5,20 +5,21 @@ const { formatBook } = require("../util/books");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  Book.find().then(result => {
-    const books = result.map(book => formatBook(book));
-    res.json(books);
-  });
+  Book.find()
+    .then(result => {
+      const books = result.map(book => formatBook(book));
+      res.json(books);
+    })
+    .catch(err => res.status(500).send(err));
 });
 
 router.get("/:id", (req, res) => {
   Book.findById(req.params.id)
     .then(book => {
-      if (!book) {
+      if (!book)
         return res
           .status(404)
           .send(`Cannot find book with id ${req.params.id}`);
-      }
 
       return res.json(formatBook(book));
     })
@@ -28,11 +29,10 @@ router.get("/:id", (req, res) => {
 router.delete("/:id", (req, res) => {
   Book.findByIdAndDelete(req.params.id)
     .then(book => {
-      if (!book) {
+      if (!book)
         return res
           .status(404)
           .send(`Cannot find book with id ${req.params.id}`);
-      }
 
       return res.send(`Deleted book with id ${req.params.id}`);
     })
