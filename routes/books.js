@@ -8,7 +8,10 @@ router.get("/", (req, res) => {
   Book.find()
     .then(result => {
       const books = result.map(book => formatBook(book));
-      res.json(books);
+      res.json({
+        numberBooks: books.length,
+        books
+      });
     })
     .catch(err => res.status(500).send(err));
 });
