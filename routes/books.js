@@ -1,15 +1,8 @@
 const express = require("express");
 const Book = require("../models/Book");
+const { formatBook } = require("../util/books");
 
 const router = express.Router();
-
-const formatBook = book => ({
-  id: book.id,
-  title: book.title,
-  description: book.description,
-  ISBN: book.ISBN,
-  language: book.language
-});
 
 router.get("/", (req, res) => {
   Book.find().then(result => {
