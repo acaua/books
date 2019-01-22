@@ -25,6 +25,20 @@ router.get("/:id", (req, res) => {
     .catch(err => res.status(500).send(err));
 });
 
+router.delete("/:id", (req, res) => {
+  Book.findByIdAndDelete(req.params.id)
+    .then(book => {
+      if (!book) {
+        return res
+          .status(404)
+          .send(`Cannot find book with id ${req.params.id}`);
+      }
+
+      return res.send(`Deleted book with id ${req.params.id}`);
+    })
+    .catch(err => res.status(500).send(err));
+});
+
 router.post("/", (req, res) => {
   let book = new Book({
     title: req.body.title,
