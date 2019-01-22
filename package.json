@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/acaua/books/issues"
   },
-  "homepage": "https://github.com/acaua/books#readme"
+  "homepage": "https://github.com/acaua/books#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
 }
