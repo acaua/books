@@ -1,0 +1,19 @@
+{
+  "name": "books",
+  "version": "1.0.0",
+  "description": "Books data CRUD",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acaua/books.git"
+  },
+  "author": "Acauã Sperl de Faria",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/acaua/books/issues"
+  },
+  "homepage": "https://github.com/acaua/books#readme"
+}
