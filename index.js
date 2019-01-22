@@ -1,9 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 const books = require("./routes/books");
 
-const dbstring = `mongodb://dev:dev123@ds147821.mlab.com:47821/books`;
+const dbstring = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${
+  process.env.DB_HOST
+}`;
 
 const app = express();
 app.use(express.json());
