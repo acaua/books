@@ -20,10 +20,7 @@ mongoose
     { useNewUrlParser: true }
   )
   .then(
-    () => {
-      app.listen(port, () => console.log(`Server listening on port ${port}`));
-    },
-    err => {
-      console.error("Cannot connect to db", err);
-    }
+    () =>
+      app.listen(port, () => console.log(`Server listening on port ${port}`)),
+    err => console.error("Cannot connect to db", err)
   );
