@@ -1,13 +1,16 @@
 const express = require("express");
 const Book = require("../models/Book");
 const { formatBook } = require("../util/books");
+const { scrapBooks } = require("../scraping/books");
 
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  Book.find()
-    .then(result => {
-      const books = result.map(book => formatBook(book));
+  Promise.all([Book.find(), scrapBooks()])
+    .then(([dbBooksResult, scrapedBooks]) => {
+      const dbBooks = dbBooksResult.map(book => formatBook(book));
+      const books = [...dbBooks, ...scrapedBooks];
+
       res.json({
         numberBooks: books.length,
         books
