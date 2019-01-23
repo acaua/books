@@ -1,9 +1,29 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
 
+const scrapISBN = require("./isbn");
+
 const booksUrl = "https://kotlinlang.org/docs/books.html";
 
 const scrapBooks = async () => {
+  const bookData = await scrapBooksData();
+
+  const bookDataWithISBN = await Promise.all(
+    bookData.map(async book => {
+      return {
+        id: book.id,
+        title: book.title,
+        description: book.description,
+        ISBN: await scrapISBN(book.url),
+        language: book.language
+      };
+    })
+  );
+
+  return bookDataWithISBN;
+};
+
+const scrapBooksData = async () => {
   const response = await axios.get(booksUrl);
 
   if (response.status !== 200) return [];
@@ -13,6 +33,7 @@ const scrapBooks = async () => {
 
   const bookData = [];
   let currentBook;
+
   $("article")
     .children()
     .each((i, elem) => {
@@ -35,9 +56,7 @@ const scrapBooks = async () => {
       } else if ($(elem).is(".book-lang")) {
         currentBook.language = $(elem).text();
       } else if ($(elem).is("a")) {
-        // This is the URL that should be used to get the book ISBN, if available
-        // currentBook.link = $(elem).attr("href");
-        currentBook.ISBN = "unavailable";
+        currentBook.url = $(elem).attr("href");
       }
     });
   bookData.push(currentBook);
@@ -45,4 +64,4 @@ const scrapBooks = async () => {
   return bookData;
 };
 
-module.exports = { scrapBooks };
+module.exports = scrapBooks;

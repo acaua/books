@@ -1,7 +1,7 @@
 const express = require("express");
 const Book = require("../models/Book");
 const { formatBook } = require("../util/books");
-const { scrapBooks } = require("../scraping/books");
+const scrapBooks = require("../scraping/books");
 
 const router = express.Router();
 
